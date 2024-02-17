@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"TODO-API-GO/entity"
+	"TODO-API-GO/Entity"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
-var todos = []entity.Todo{
+var todos = []Entity.Todo{
 	{ID: "1", Item: "Clean room", Completed: false},
 	{ID: "2", Item: "Read Book", Completed: false},
 	{ID: "3", Item: "Homework", Completed: false},
@@ -18,7 +18,7 @@ func GetTodos(context *gin.Context) {
 }
 
 func AddTodo(content *gin.Context) {
-	var newTodo entity.Todo
+	var newTodo Entity.Todo
 
 	if err := content.BindJSON(&newTodo); err != nil {
 		return
@@ -28,7 +28,7 @@ func AddTodo(content *gin.Context) {
 	content.IndentedJSON(http.StatusCreated, newTodo)
 }
 
-func GetTodoById(id string) (*entity.Todo, error) {
+func GetTodoById(id string) (*Entity.Todo, error) {
 	for i, t := range todos {
 		if t.ID == id {
 			return &todos[i], nil
@@ -36,7 +36,7 @@ func GetTodoById(id string) (*entity.Todo, error) {
 	}
 	return nil, errors.New("todo not found")
 }
-func TakeTodoFromContext(content *gin.Context) *entity.Todo {
+func TakeTodoFromContext(content *gin.Context) *Entity.Todo {
 	id := content.Param("id")
 	todo, err := GetTodoById(id)
 
